@@ -1,0 +1,11 @@
+# Bỏ qua thư mục cache của Python
+__pycache__/
+*.py[cod]
+
+# Bỏ qua các file ảnh chụp màn hình tạm thời (quan trọng)
+screen_*.png
+screen.png
+
+# Bỏ qua thư mục môi trường ảo (nếu có)
+venv/
+env/
