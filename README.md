@@ -1,4 +1,4 @@
-# Auto TFT Mobile - Bot Cày Token/Exp Tự Động (ADB Version)
+# Auto TFT Mobile - Bot Cày Vé Pass Tự Động (ADB Version)
 
 Tool tự động hóa chơi Đấu Trường Chân Lý (TFT) Mobile trên giả lập LDPlayer sử dụng Python, ADB và nhận diện hình ảnh (OpenCV). Hỗ trợ chạy nhiều tài khoản cùng lúc (Multi-thread).
 
