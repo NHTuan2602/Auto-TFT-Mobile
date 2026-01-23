@@ -43,7 +43,7 @@
 | **ADB Debugging** | **Open Connection (Bật)** | Cấp quyền cho Tool gửi lệnh điều khiển. |
 | **CPU / RAM** | 2 Cores / 2GB RAM | Cấu hình tối ưu để treo nhiều tab nhẹ máy. |
 | **Root** | Tắt (Disable) | Tránh các lỗi bảo mật hoặc crash game. |
-| **Ingame** | **Linh thú mặc định (Thủy Thần)** | Để bot nhận diện thanh máu chính xác nhất. |
+| **Ingame** | **Linh thú và sàn mặc định (Thủy Thần)** | Để bot nhận diện chính xác nhất. |
 
 <div align="center">
   <img src="images/setting.png" width="600" alt="Cài đặt LDPlayer">
