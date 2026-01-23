@@ -1,5 +1,4 @@
 
-```markdown
 <div align="center">
 
 # 🏆 Auto TFT Mobile - Tool Cày Pass Tự Động
@@ -19,7 +18,6 @@
 
 </div>
 
----
 
 ## 🚀 Tính Năng Nổi Bật
 
