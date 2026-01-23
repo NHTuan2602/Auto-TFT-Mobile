@@ -26,8 +26,6 @@ Mục,Cài đặt,Lý do
 ADB Debugging,Open Connection (Bật),Để tool gửi lệnh điều khiển.
 CPU/RAM,2 Cores / 3GB RAM,Cấu hình tối ưu để treo nhiều tab nhẹ máy.
 Root,Tắt (Không cần thiết),Tránh các lỗi bảo mật game.
-Dưới đây là file README.md phiên bản hoàn chỉnh nhất, đã cập nhật toàn bộ các tính năng mới nhất mà chúng ta vừa làm (như Tự động Kill App khi lỗi kết nối, Giảm thời gian chờ OpenGL, Logic chọn chế độ thông minh...).Bạn có 2 cách để lấy file này:Cách 1: Copy thủ côngBạn tạo file tên README.md rồi dán nội dung dưới đây vào:Markdown# 🏆 Auto TFT Mobile - Bot Cày Vé Pass Tự Động (Final Version)
-
 Tool tự động hóa chơi Đấu Trường Chân Lý (TFT) Mobile trên giả lập LDPlayer sử dụng Python, ADB và xử lý ảnh (OpenCV). Phiên bản tối ưu hóa tốc độ và khả năng tự phục hồi lỗi.
 
 ## 🚀 Tính Năng Nổi Bật
