@@ -1,68 +1,152 @@
-# 🏆 Auto TFT Mobile - Bot Cày Vé Pass Tự Động (Final Version)
 
-Tool tự động hóa chơi Đấu Trường Chân Lý (TFT) Mobile trên giả lập LDPlayer sử dụng Python, ADB và xử lý ảnh (OpenCV). Phiên bản tối ưu hóa tốc độ và khả năng tự phục hồi lỗi.
+```markdown
+<div align="center">
 
-## 🚀 Tính Năng Nổi Bật
-- **🔄 Smart Recovery (Tự phục hồi):** Tự động phát hiện lỗi "Mất kết nối", "Lỗi đăng nhập" để buộc dừng (Force Stop) game và mở lại từ đầu.
-- **⚡ Speed Mode (Tốc độ cao):** Giảm thời gian chờ, bot phản xạ chọn trận và chấp nhận trận đấu ngay lập tức.
-- **🛠️ Xử lý OpenGL/Update:** Tự động phát hiện bảng thông báo OpenGL hoặc Cập nhật để xử lý ngay sau 5 giây (không chờ mù 40s như cũ).
-- **🎮 Chọn Chế Độ Thông Minh:** Ưu tiên **Chế độ Mới** -> Nếu không có sẽ chọn **Chế độ Thường**.
-- **💻 Đa Luồng (Multi-threading):** Hỗ trợ chạy song song nhiều thiết bị giả lập cùng lúc.
-- **⚙️ Cấu hình JSON:** Quản lý danh sách thiết bị và cài đặt qua file `config.json` tiện lợi.
+# 🏆 Auto TFT Mobile - Tool Cày Pass Tự Động
+### Automation Bot for Teamfight Tactics Mobile (LDPlayer)
+
+![Python](https://img.shields.io/badge/Python-3.10+-blue.svg?style=flat&logo=python)
+![Platform](https://img.shields.io/badge/Platform-Windows-win?style=flat&logo=windows)
+![Emulator](https://img.shields.io/badge/Emulator-LDPlayer_9-yellow.svg)
+![License](https://img.shields.io/badge/License-MIT-green.svg)
+
+<br>
+
+**Phiên bản tối ưu hóa tốc độ, đa luồng và khả năng tự phục hồi lỗi.**
+*Sử dụng công nghệ xử lý ảnh (OpenCV) và ADB để tự động hóa thao tác.*
+
+[Tải Xuống Ngay (Latest Release)](https://github.com/NHTuan2602/Auto-TFT-Mobile-VNG/releases/tag/AutoTFTMobile) • [Báo Lỗi](https://github.com/NHTuan2602/Auto-TFT-Mobile-VNG/issues)
+
+</div>
 
 ---
 
-## 🛠️ Yêu Cầu Cài Đặt
+## 🚀 Tính Năng Nổi Bật
 
- **[LDPlayer 9](https://vn.ldplayer.net/):** Giả lập Android (Bắt buộc).
-⚙️ Cấu Hình Giả Lập (QUAN TRỌNG)
-Để Bot hoạt động chính xác 100%, hãy cài đặt LDPlayer như sau:
-Sàn đấu mặc định nhân vật thuỷ thần
-Mục,Cài đặt,Lý do
-Độ phân giải,1280x720 (dpi 240),Để khớp với ảnh mẫu nhận diện.
-ADB Debugging,Open Connection (Bật),Để tool gửi lệnh điều khiển.
-CPU/RAM,2 Cores / 2GB RAM,Cấu hình tối ưu để treo nhiều tab nhẹ máy.
-Root,Tắt (Không cần thiết),Tránh các lỗi bảo mật game.
-<img src="images/setting.png" width="500">
-Tool tự động hóa chơi Đấu Trường Chân Lý (TFT) Mobile trên giả lập LDPlayer sử dụng Python, ADB và xử lý ảnh (OpenCV). Phiên bản tối ưu hóa tốc độ và khả năng tự phục hồi lỗi.
-📂 Cấu trúc Thư mục & Ảnh Mẫu
-Đảm bảo thư mục bot có đủ các file ảnh .png sau (cắt từ màn hình giả lập):
+| Tính năng | Mô tả chi tiết |
+| :--- | :--- |
+| **🔄 Smart Recovery** | Tự động phát hiện lỗi "Mất kết nối", "Lỗi đăng nhập" để buộc dừng (Force Stop) và mở lại game từ đầu. |
+| **⚡ Speed Mode** | Tối ưu hóa vòng lặp, giảm độ trễ, bot phản xạ chọn trận và chấp nhận trận đấu ngay lập tức. |
+| **🛠️ Auto Fix** | Tự động phát hiện và xử lý các thông báo **OpenGL** hoặc **Cập nhật** chỉ sau 5 giây (thay vì chờ 40s như bản cũ). |
+| **🎮 Chế độ Thông minh** | Ưu tiên chọn **Chế độ Mới** (Sự kiện). Nếu không có sẽ tự động chuyển sang **Chế độ Thường**. |
+| **💻 Đa Luồng (Multi)** | Hỗ trợ chạy song song nhiều thiết bị giả lập cùng lúc, không chiếm chuột máy tính. |
+| **🚫 Anti-Stuck** | Tự động thoát menu, tắt quảng cáo/thông báo rác, tự động reset sảnh nếu bị kẹt. |
 
-Nhóm Lỗi & Hệ thống: loi_ket_noi.png, icon_game.png, nut_cap_nhat.png, nut_ok_opengl.png, nut_mo_game.png.
+---
 
-Nhóm Sảnh: find_match.png (Nút Chơi xanh), nut_che_do_moi.png, nut_che_do_thuong.png, nut_quay_lai.png.
+## 🛠️ Yêu Cầu Hệ Thống & Cài Đặt
 
-Nhóm Trong Game: accept.png, nut_doi.png, surrender_btn.png, confirm_surrender.png.
+### 1. Cấu hình Giả lập (BẮT BUỘC)
+Để Bot hoạt động chính xác 100%, bạn cần thiết lập **LDPlayer 9** đúng theo bảng dưới đây:
 
-Nhóm Popup & Thoát: nut_dong_popup.png, nut_thoat_1.png...
+| Mục | Cài đặt Yêu cầu | Lý do |
+| :--- | :--- | :--- |
+| **Độ phân giải** | **1280x720 (dpi 240)** | Khớp với tọa độ ảnh mẫu nhận diện của Bot. |
+| **ADB Debugging** | **Open Connection (Bật)** | Cấp quyền cho Tool gửi lệnh điều khiển. |
+| **CPU / RAM** | 2 Cores / 2GB RAM | Cấu hình tối ưu để treo nhiều tab nhẹ máy. |
+| **Root** | Tắt (Disable) | Tránh các lỗi bảo mật hoặc crash game. |
+| **Ingame** | **Linh thú mặc định (Thủy Thần)** | Để bot nhận diện thanh máu chính xác nhất. |
 
-📝 Cách Sử Dụng
-Lấy danh sách thiết bị: Mở CMD, gõ: adb devices
-<img src="images/adb.png" width="500">
-Cấu hình config.json: Tool sẽ tự tạo file này khi chạy lần đầu. Bạn mở lên và điền tên thiết bị:
-{
-    "LDPLAYER_PATH": "C:\\LDPlayer\\LDPlayer9",
-    "LIST_DEVICES": ["emulator-5554", "emulator-5556"]
-}
-Chạy Tool: multi_main.exe
-<img src="images/app.png" width="500">
-📅 Changelog (Lịch sử cập nhật)
-[24/01/2026] - Bản cập nhật "Auto Restart & Smart Wait"
-Tính năng mới: Thêm hàm force_stop_game để tắt hẳn ứng dụng khi gặp lỗi kết nối (khắc phục lỗi kẹt nút "Thử lại").
+<div align="center">
+  <img src="images/setting.png" width="600" alt="Cài đặt LDPlayer">
+</div>
 
-Tối ưu: Sửa logic khởi động game: Bấm icon game -> Chờ 5s -> Check OpenGL/Update ngay (Thay vì ngủ 40s gây lãng phí thời gian).
+### 2. Cấu trúc thư mục chuẩn
+Sau khi tải về và giải nén, thư mục Tool của bạn phải đầy đủ các file như sau mới chạy được:
 
-Sửa lỗi: Cập nhật tên gói (Package Name) chính xác cho bản VNG và Riot Quốc tế.
+```text
+AutoTFT_Final/
+├── multi_main.exe          # File chạy chính
+├── config.json             # File cấu hình (Tự tạo sau lần chạy đầu)
+├── adb.exe                 # Bộ kết nối ADB (Bắt buộc)
+├── AdbWinApi.dll           # Thư viện ADB
+├── AdbWinUsbApi.dll        # Thư viện ADB
+├── images/                 # (Tùy chọn) Thư mục chứa ảnh hướng dẫn
+│
+├── [Nhóm Ảnh Hệ Thống]     # icon_game, loi_ket_noi, nut_cap_nhat...
+├── [Nhóm Ảnh Sảnh]         # find_match, nut_che_do_moi, nut_quay_lai...
+└── [Nhóm Ảnh Trong Game]   # accept, surrender_btn, confirm_surrender...
 
-[23/01/2026] - Bản cập nhật Speed & Logic
-Tối ưu: Giảm độ trễ vòng lặp xuống 1s để tăng tốc độ phản xạ.
+```
 
-Sửa lỗi: Fix lỗi vòng lặp vô tận khi chọn chế độ.
+---
 
-Tính năng: Tự động reset sảnh (nút Back) nếu kẹt nút tìm trận quá 60s.
+## 📝 Hướng Dẫn Sử Dụng
 
-⚠️ Lưu ý
-Tool chỉ phục vụ mục đích học tập và hỗ trợ cày vé Pass (Battle Pass).
+### Bước 1: Lấy ID thiết bị (Tùy chọn)
 
-Nếu gặp lỗi "ADB Offline": Hãy tắt/bật lại ADB Debugging trong cài đặt LDPlayer.
-<img src="images/local.png" width="500">
+Mở CMD và gõ lệnh `adb devices` để xem danh sách các giả lập đang bật.
+
+<div align="center">
+<img src="images/adb.png" width="500" alt="ADB Devices">
+</div>
+
+### Bước 2: Chạy Tool & Cấu hình
+
+1. Mở file `multi_main.exe` (Chạy dưới quyền **Administrator** để ổn định nhất).
+2. Giao diện Tool hiện lên, bạn nhập:
+* **Đường dẫn LDPlayer:** (Ví dụ: `C:\LDPlayer\LDPlayer9`)
+* **Danh sách thiết bị:** Nhập tên (vd: `emulator-5554`) hoặc copy từ bảng `adb devices` vào.
+
+
+3. Bấm **BẮT ĐẦU**.
+
+<div align="center">
+<img src="images/app.png" width="500" alt="Giao diện App">
+
+
+
+
+
+<i>Giao diện cấu hình trực quan, hỗ trợ Log chi tiết</i>
+</div>
+
+---
+
+## 📅 Changelog (Lịch sử cập nhật)
+
+<details open>
+<summary><b>🔥 [24/01/2026] - Bản cập nhật "Auto Restart & Smart Wait"</b></summary>
+
+
+
+
+* **Tính năng mới:** Thêm hàm `force_stop_game` để tắt hẳn ứng dụng khi gặp lỗi kết nối (khắc phục lỗi kẹt nút "Thử lại").
+* **Tối ưu:** Sửa logic khởi động game (Bấm icon -> Chờ 5s -> Check lỗi ngay).
+* **Sửa lỗi:** Cập nhật tên gói (Package Name) chính xác cho bản VNG và Riot Quốc tế.
+
+</details>
+
+<details>
+<summary><b>⚡ [23/01/2026] - Bản cập nhật Speed & Logic</b></summary>
+
+
+
+
+* **Tối ưu:** Giảm độ trễ vòng lặp xuống 1s để tăng tốc độ phản xạ.
+* **Sửa lỗi:** Fix lỗi vòng lặp vô tận khi chọn chế độ.
+* **Tính năng:** Tự động reset sảnh (nút Back) nếu kẹt nút tìm trận quá 60s.
+
+</details>
+
+---
+
+## ⚠️ Tuyên bố miễn trừ trách nhiệm (Disclaimer)
+
+> [!WARNING]
+> Công cụ này được phát triển với mục đích **học tập, nghiên cứu lập trình Python** và tự động hóa (Automation).
+
+1. Việc sử dụng phần mềm thứ 3 có thể vi phạm điều khoản dịch vụ của Nhà phát hành game.
+2. Tác giả **không chịu trách nhiệm** về bất kỳ rủi ro nào đối với tài khoản của bạn (khóa nick, mất vật phẩm...).
+3. Nếu gặp lỗi **"ADB Offline"**: Hãy thử Tắt/Bật lại chế độ ADB Debugging trong cài đặt LDPlayer hoặc khởi động lại giả lập.
+
+<div align="center">
+<img src="images/local.png" width="500" alt="Fix ADB Offline">
+</div>
+
+---
+
+<div align="center">
+<i>Made with ❤️ by [NHTuan2602]</i>
+</div>
+
