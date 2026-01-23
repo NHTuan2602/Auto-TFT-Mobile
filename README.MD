@@ -26,7 +26,7 @@ Mục,Cài đặt,Lý do
 ADB Debugging,Open Connection (Bật),Để tool gửi lệnh điều khiển.
 CPU/RAM,2 Cores / 3GB RAM,Cấu hình tối ưu để treo nhiều tab nhẹ máy.
 Root,Tắt (Không cần thiết),Tránh các lỗi bảo mật game.
-
+<img src="images/setting.png" width="500">
 Tool tự động hóa chơi Đấu Trường Chân Lý (TFT) Mobile trên giả lập LDPlayer sử dụng Python, ADB và xử lý ảnh (OpenCV). Phiên bản tối ưu hóa tốc độ và khả năng tự phục hồi lỗi.
 📂 Cấu trúc Thư mục & Ảnh Mẫu
 Đảm bảo thư mục bot có đủ các file ảnh .png sau (cắt từ màn hình giả lập):
@@ -41,14 +41,14 @@ Nhóm Popup & Thoát: nut_dong_popup.png, nut_thoat_1.png...
 
 📝 Cách Sử Dụng
 Lấy danh sách thiết bị: Mở CMD, gõ: adb devices
-
+<img src="images/adb.png" width="500">
 Cấu hình config.json: Tool sẽ tự tạo file này khi chạy lần đầu. Bạn mở lên và điền tên thiết bị:
 {
     "LDPLAYER_PATH": "C:\\LDPlayer\\LDPlayer9",
     "LIST_DEVICES": ["emulator-5554", "emulator-5556"]
 }
 Chạy Tool: multi_main.exe
-
+<img src="images/app.png" width="500">
 📅 Changelog (Lịch sử cập nhật)
 [24/01/2026] - Bản cập nhật "Auto Restart & Smart Wait"
 Tính năng mới: Thêm hàm force_stop_game để tắt hẳn ứng dụng khi gặp lỗi kết nối (khắc phục lỗi kẹt nút "Thử lại").
@@ -68,3 +68,4 @@ Tính năng: Tự động reset sảnh (nút Back) nếu kẹt nút tìm trận 
 Tool chỉ phục vụ mục đích học tập và hỗ trợ cày vé Pass (Battle Pass).
 
 Nếu gặp lỗi "ADB Offline": Hãy tắt/bật lại ADB Debugging trong cài đặt LDPlayer.
+<img src="images/local.png" width="500">
