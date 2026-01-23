@@ -1,0 +1,13 @@
+{
+    "LDPLAYER_PATH": "C:\\LDPlayer\\LDPlayer9",
+    "THRESHOLD": 0.85,
+    "LIST_DEVICES": [
+        "emulator-5554",
+        "emulator-5556",
+        "emulator-5558",
+        "emulator-5560",
+        "emulator-5562",
+        "emulator-5564"
+    ],
+    "GHI_CHU": "Điền tên thiết bị vào đây."
+}

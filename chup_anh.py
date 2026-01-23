@@ -5,7 +5,7 @@ import cv2
 # ================= CẤU HÌNH =================
 LDPLAYER_PATH = r"C:\LDPlayer\LDPlayer9"
 # Thay tên thiết bị của bạn vào đây (chọn 1 cái đang bật để chụp mẫu)
-DEVICE_ID = "emulator-5558" 
+DEVICE_ID = "emulator-5554" 
 # ============================================
 
 ADB_PATH = os.path.join(LDPLAYER_PATH, "adb.exe")
