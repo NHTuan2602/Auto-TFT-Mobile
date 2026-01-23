@@ -14,11 +14,7 @@ Tool tự động hóa chơi Đấu Trường Chân Lý (TFT) Mobile trên giả
 
 ## 🛠️ Yêu Cầu Cài Đặt
 
-1. **[LDPlayer 9](https://vn.ldplayer.net/):** Giả lập Android (Bắt buộc).
-2. **[Python 3.10+](https://www.python.org/downloads/):** Tích chọn **"Add Python to PATH"** khi cài.
-3. **Thư viện Python:**
-   ```bash
-   pip install opencv-python numpy
+ **[LDPlayer 9](https://vn.ldplayer.net/):** Giả lập Android (Bắt buộc).
 ⚙️ Cấu Hình Giả Lập (QUAN TRỌNG)
 Để Bot hoạt động chính xác 100%, hãy cài đặt LDPlayer như sau:
 Sàn đấu mặc định nhân vật thuỷ thần
