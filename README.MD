@@ -21,10 +21,11 @@ Tool tự động hóa chơi Đấu Trường Chân Lý (TFT) Mobile trên giả
    pip install opencv-python numpy
 ⚙️ Cấu Hình Giả Lập (QUAN TRỌNG)
 Để Bot hoạt động chính xác 100%, hãy cài đặt LDPlayer như sau:
+Sàn đấu mặc định nhân vật thuỷ thần
 Mục,Cài đặt,Lý do
 Độ phân giải,1280x720 (dpi 240),Để khớp với ảnh mẫu nhận diện.
 ADB Debugging,Open Connection (Bật),Để tool gửi lệnh điều khiển.
-CPU/RAM,2 Cores / 3GB RAM,Cấu hình tối ưu để treo nhiều tab nhẹ máy.
+CPU/RAM,2 Cores / 2GB RAM,Cấu hình tối ưu để treo nhiều tab nhẹ máy.
 Root,Tắt (Không cần thiết),Tránh các lỗi bảo mật game.
 <img src="images/setting.png" width="500">
 Tool tự động hóa chơi Đấu Trường Chân Lý (TFT) Mobile trên giả lập LDPlayer sử dụng Python, ADB và xử lý ảnh (OpenCV). Phiên bản tối ưu hóa tốc độ và khả năng tự phục hồi lỗi.
