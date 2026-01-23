@@ -44,18 +44,13 @@ ICON_GAME = "icon_game.png"
 NUT_CAP_NHAT = "nut_cap_nhat.png"
 NUT_THOAT_CAP_NHAT = "nut_thoat_1.png" 
 
-# [TÁCH RIÊNG]
 NUT_OPENGL = "nut_ok_opengl.png"           
 NUT_XAC_NHAN_DAU_HANG = "confirm_surrender.png" 
 
-# Nhóm Thoát Trận
 LIST_NUT_THOAT_THUA = ["nut_thoat_2.png", "nut_thoat_chung.png"] 
-
-# Nhóm Chuỗi Kết Thúc
 NUT_TIEP_TUC = "nut_thoat_3.png" 
 NUT_CHOI_LAI = "nut_thoat_4.png" 
 
-# Nhóm Popup & Cửa hàng
 NUT_DONG_CUA_HANG = "nut_mo_rong.png" 
 LIST_POPUP_RAC = [
     "nut_dong_popup.png", "nut_dong_popup_1.png",    
@@ -63,10 +58,9 @@ LIST_POPUP_RAC = [
     "nut_dong_cua_hang.png"
 ] 
 
-# Vào trận
 LIST_NUT_VAO_TRAN = ["find_match.png", "nut_choi_main.png"]
 
-# ================= 3. CÁC HÀM HỖ TRỢ =================
+# ================= 3. CÁC HÀM HỖ TRỢ (TỐI ƯU CPU) =================
 def log(device_id, msg):
     print(f"[{datetime.now().strftime('%H:%M:%S')}] [{device_id}] ➤ {msg}")
 
@@ -81,27 +75,25 @@ def tap(device_id, x, y):
     rand_y = y + random.randint(-5, 5)
     full_cmd = f'"{ADB_PATH}" -s {device_id} shell input tap {rand_x} {rand_y}'
     try:
-        subprocess.run(full_cmd, shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, timeout=5)
+        # Sử dụng Popen để không chặn luồng chính, giúp CPU không phải chờ lệnh tap hoàn thành
+        subprocess.Popen(full_cmd, shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     except: pass
 
+# [QUAN TRỌNG] HÀM CHỤP MÀN HÌNH ĐỌC THẲNG TỪ RAM (KHÔNG GHI FILE)
 def capture_screen(device_id):
-    filename = f"screen_{device_id}.png"
-    if os.path.exists(filename):
-        try: os.remove(filename)
-        except: pass
+    # Lệnh exec-out screencap -p giúp lấy dữ liệu ảnh trực tiếp
+    cmd = [ADB_PATH, "-s", device_id, "exec-out", "screencap", "-p"]
     try:
-        subprocess.run(f'"{ADB_PATH}" -s {device_id} shell screencap -p /sdcard/{filename}', 
-                       shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, timeout=5)
-        subprocess.run(f'"{ADB_PATH}" -s {device_id} pull /sdcard/{filename} {filename}', 
-                       shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, timeout=5)
-    except: return None, filename
-
-    if os.path.exists(filename):
-        try:
-            img = cv2.imread(filename)
-            if img is not None: return img, filename
-        except: pass
-    return None, filename
+        # Chạy lệnh và lấy dữ liệu đầu ra (stdout)
+        process = subprocess.run(cmd, stdout=subprocess.PIPE, stderr=subprocess.DEVNULL, timeout=5)
+        
+        # Nếu lệnh chạy thành công và có dữ liệu
+        if process.returncode == 0 and process.stdout:
+            # Chuyển dữ liệu binary thành ảnh OpenCV ngay trong RAM
+            return cv2.imdecode(np.frombuffer(process.stdout, np.uint8), cv2.IMREAD_COLOR)
+    except: 
+        pass
+    return None
 
 def find_image(template_name, screen_img):
     if screen_img is None: return None
@@ -131,34 +123,29 @@ def handle_end_game_sequence(device_id):
     log(device_id, "🔄 Vào chuỗi: Tìm Tiếp tục -> Chơi lại...")
     
     start_time = time.time()
-    # Chạy vòng lặp xử lý trong 20 giây
     while time.time() - start_time < 20:
-        screen_seq, f_seq = capture_screen(device_id)
-        if screen_seq is None: continue
+        screen_seq = capture_screen(device_id)
+        if screen_seq is None: 
+            time.sleep(0.5)
+            continue
         
-        # 1. Tìm nút CHƠI LẠI (Ưu tiên số 1 - Bấm là xong trận)
+        # 1. Tìm nút CHƠI LẠI
         pos_choi_lai = find_image(NUT_CHOI_LAI, screen_seq)
         if pos_choi_lai:
             log(device_id, f"🚀 Bấm CHƠI LẠI ({NUT_CHOI_LAI}) -> Hoàn thành!")
             tap(device_id, *pos_choi_lai)
-            try: 
-                os.remove(f_seq)
-            except: pass
             break 
 
-        # 2. Tìm nút TIẾP TỤC (Bấm để sang màn hình Chơi lại)
+        # 2. Tìm nút TIẾP TỤC
         pos_tiep_tuc = find_image(NUT_TIEP_TUC, screen_seq)
         if pos_tiep_tuc:
             log(device_id, f"👉 Bấm TIẾP TỤC...")
             tap(device_id, *pos_tiep_tuc)
-            time.sleep(0.3) # Double tap cho chắc
+            time.sleep(0.3)
             tap(device_id, *pos_tiep_tuc)
             
-            start_time = time.time() # Reset lại thời gian chờ để không bị thoát sớm
-            time.sleep(1) # Chờ chuyển cảnh
-            try: 
-                os.remove(f_seq)
-            except: pass
+            start_time = time.time() 
+            time.sleep(1)
             continue
 
         # 3. [DỰ PHÒNG] Tìm lại nút xác nhận đầu hàng
@@ -174,25 +161,19 @@ def handle_end_game_sequence(device_id):
             if find_image(btn_play, screen_seq): is_lobby = True
         if is_lobby:
             log(device_id, "✨ Đã về sảnh -> Kết thúc chuỗi.")
-            try: 
-                os.remove(f_seq)
-            except: pass
             break
         
-        # 5. Check thoát thua (nếu chưa bấm được)
+        # 5. Check thoát thua
         for btn_exit in LIST_NUT_THOAT_THUA:
             p_exit = find_image(btn_exit, screen_seq)
             if p_exit:
                 tap(device_id, *p_exit)
 
-        try: 
-            os.remove(f_seq)
-        except: pass
         time.sleep(0.5)
 
 # ================= 5. LOGIC AUTO CHÍNH =================
 def run_bot(device_id):
-    log(device_id, "⚡ Bot Auto (Added 'Continue' Check): Sẵn sàng!")
+    log(device_id, "⚡ Bot Low CPU Usage Mode: Sẵn sàng!")
     
     last_check_time = 0 
     lobby_stuck_start = 0 
@@ -204,9 +185,9 @@ def run_bot(device_id):
     while True:
         try:
             loop_count += 1
-            screen, filename = capture_screen(device_id)
+            screen = capture_screen(device_id)
             if screen is None:
-                time.sleep(0.5)
+                time.sleep(1) # Nghỉ lâu hơn nếu không chụp được ảnh
                 continue
 
             # --- A. HỆ THỐNG / LỖI ---
@@ -241,15 +222,11 @@ def run_bot(device_id):
                 time.sleep(5)
                 continue
 
-            # --- B. XỬ LÝ KẾT THÚC TRẬN (EXIT / CONTINUE) ---
-            
-            # [MỚI] 1. Nếu đang ở màn hình có nút "Tiếp tục" (nut_thoat_3) -> Vào chuỗi luôn
+            # --- B. XỬ LÝ KẾT THÚC TRẬN ---
             if find_image(NUT_TIEP_TUC, screen):
-                log(device_id, "👉 Phát hiện nút Tiếp tục (Ngoài luồng) -> Chạy chuỗi kết thúc.")
                 handle_end_game_sequence(device_id)
                 continue
 
-            # 2. Nút Exit (Khi hết máu)
             found_loss_exit = False
             for exit_img in LIST_NUT_THOAT_THUA:
                 pos = find_image(exit_img, screen)
@@ -262,7 +239,6 @@ def run_bot(device_id):
                     break
             if found_loss_exit: continue
 
-            # 3. Nút Dấu Tích (Xác nhận đầu hàng)
             if find_image(NUT_XAC_NHAN_DAU_HANG, screen):
                 log(device_id, "🏳️ Bấm Dấu Tích (Xác nhận).")
                 tap(device_id, *find_image(NUT_XAC_NHAN_DAU_HANG, screen))
@@ -332,15 +308,13 @@ def run_bot(device_id):
                     log(device_id, f"🛒 Đóng cửa hàng -> Tìm Cài đặt!")
                     tap(device_id, *pos_store)
                     time.sleep(1)
-                    screen_new, f_new = capture_screen(device_id)
+                    # Chụp lại nhanh
+                    screen_new = capture_screen(device_id)
                     if screen_new is not None:
                         settings_pos = find_image("settings_icon.png", screen_new)
                         if settings_pos: 
                             log(device_id, "⚙️ Bấm Cài đặt.")
                             tap(device_id, *settings_pos)
-                        try: 
-                            os.remove(f_new)
-                        except: pass
                 else:
                     for popup_img in LIST_POPUP_RAC:
                         popup_pos = find_image(popup_img, screen)
@@ -360,17 +334,16 @@ def run_bot(device_id):
                     tap(device_id, *find_image("settings_icon.png", screen))
                 last_check_time = time.time()
 
-            try: 
-                os.remove(filename) 
-            except: pass
-            time.sleep(0.5)
+            # [TỐI ƯU] Nghỉ 1 giây nếu không làm gì cả
+            # Điều này giúp giảm tải CPU khi bot đang ở trạng thái chờ
+            time.sleep(1)
 
         except Exception as e:
             log(device_id, f"LỖI: {e}")
             time.sleep(3)
 
 def main():
-    print(f"=== BOT AUTO TFT - FIXED SYNTAX ===")
+    print(f"=== BOT AUTO TFT - LOW CPU & RAM ===")
     if not LIST_DEVICES: return
     threads = []
     for dev in LIST_DEVICES:
@@ -378,7 +351,8 @@ def main():
         t.daemon = True 
         threads.append(t)
         t.start()
-        time.sleep(2) 
+        # Giãn cách thời gian khởi tạo mỗi thiết bị để CPU không bị shock
+        time.sleep(3) 
     try:
         while True: time.sleep(1)
     except KeyboardInterrupt: pass
